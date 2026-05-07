@@ -1,0 +1,10 @@
+8
+Diesel 1
+Alloy 4
+Battery 5
+Alloy 1
+Car 5
+Zirconium 7
+Vinyl 3
+Wine 1
+6
