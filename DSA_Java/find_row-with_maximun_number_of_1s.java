@@ -67,7 +67,7 @@ class findMat {
  	}
 
 	public static void main(String args[]) {
-		int[][] mat = {{0,0,0}, {0,0,0},{0,0,0}};
+		int[][] mat = {{0,0,0}, {0,0,1},{0,0,0}};
 
 		System.out.println(optimal(mat));
 	}
