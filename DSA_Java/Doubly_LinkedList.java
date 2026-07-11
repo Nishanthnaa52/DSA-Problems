@@ -259,19 +259,50 @@ class Main {
     
     //
     
+    
+    // remove the duplicate from the dobly linkedlist.
+    
+    private static Node removeduplicateDLL(Node head) {
+        
+        Node temp = head;
+        
+        // Time complexity - O(n); Space complexity - O(1).
+        
+        while (temp != null && temp.next != null) {
+            
+            if (temp.data == temp.next.data) {
+                
+                Node duplicate = temp.next;
+                
+                temp.next = duplicate.next;
+                
+                if (duplicate.next != null) {
+                    duplicate.next.back = temp;
+                }
+                
+            }
+            else {
+                temp = temp.next;
+            }
+            
+        }
+        
+        return head;
+    }
+    
 	// Main function.
 	public static void main(String args[]) {
-		int[] arr = {3,1,5,7,2};
+		int[] arr = {1,1,1,3,3,3,4,5,5,5,6};
 
 		Node y = convertarrToLinkedList(arr);
 
 
-// 		Node yy = InsertHeadLast(y, 78);
-// 		Node temp = yy;
+		Node yy = removeduplicateDLL(y);
+		Node temp = yy;
         
-// 		print(yy);
+		print(yy);
 
-        System.out.println(hashMapTargetSum(y,8));
+        // System.out.println(hashMapTargetSum(y,8));
 	}
 
 }
