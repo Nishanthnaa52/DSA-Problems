@@ -1,3 +1,5 @@
+import java.util.*;
+
 class Node {
 
 	int data;
@@ -145,18 +147,131 @@ class Main {
         return head;
     }
     
+    private static Node check(Node i , Node temp, int target) {
+	   
+	    while (temp != null) {
+	        if (i.data + temp.data == target) {
+	            return temp;
+	        }
+	        temp = temp.next;
+	    }
+	    
+	    return null;
+	}
+	
+	// The target sum pair from the Doubly Linkedlist.
+	
+	//
+	
+	private static List<List<Integer>> targetSumValueMatrix(Node head, int target) {
+	    
+	    List<List<Integer>> matrix = new ArrayList<>();
+	    
+	 
+	    Node i = head;
+	    
+	    while (i != null) {
+	        Node k = check(i, i.next, target);
+	        if (k != null) {
+	            List<Integer> row = new ArrayList<>();
+	            row.add(i.data);
+	            row.add(k.data);
+	            matrix.add(row);
+	        }
+	       
+	        i = i.next;
+	       
+	    }
+	    
+	    return matrix;
+	    
+	}
+	
+	// the HashSet solution for unsorted Doubly LinkedList.
+	private static List<List<Integer>> hashMapTargetSum(Node head, int target) {
+	    
+	    Set<Integer> map = new HashSet<>();
+	    
+	    List<List<Integer>> matrix = new ArrayList<>();
+	    
+	    Node temp = head;
+	    
+	    while (temp != null) {
+	        
+	        int val = target - temp.data;
+	        
+	        if (map.contains(val)) {
+	            
+	            List<Integer> row = new ArrayList<>();
+	            
+	            row.add(val);
+	            row.add(temp.data);
+	            
+	            matrix.add(row);
+	        }
+	        
+	        map.add(temp.data);
+	        temp = temp.next;
+	    }
+	    return matrix;
+	}
+    
+    private static List<List<Integer>> taregetValueInDoublyLinkedList(Node head, int target) {
+        
+        List<List<Integer>> matrix = new ArrayList<>();
+        
+        Node temp = head;
+
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+        
+        Node left = head;
+        Node right = temp;
+        
+        while (left != right && right.back != left) { // left.data <= right.data - We can use any of this condition.
+            
+            int val = left.data + right.data;
+            
+            if (val > target) {
+                right = right.back;
+            }
+            
+            if (val < target) {
+                left = left.next;
+            }
+            
+            if (val == target) {
+                List<Integer> row = new ArrayList<>();
+                
+                row.add(left.data);
+                row.add(right.data);
+            
+                matrix.add(row);
+                
+                left = left.next;
+                right = right.back;
+            }
+        }
+        
+        return matrix;
+    }
+    
+    //
+    
 	// Main function.
 	public static void main(String args[]) {
-		int[] arr = {2,4,6,9};
+		int[] arr = {3,1,5,7,2};
 
 		Node y = convertarrToLinkedList(arr);
 
 
-		Node yy = InsertHeadLast(y, 78);
-		Node temp = yy;
+// 		Node yy = InsertHeadLast(y, 78);
+// 		Node temp = yy;
         
-		print(yy);
+// 		print(yy);
 
+        System.out.println(hashMapTargetSum(y,8));
 	}
 
 }
