@@ -14,7 +14,7 @@ class Node {
 	}
 }
 
-class LinkedList_code {
+class Linkedlist {
 
 	// convert array into Linkedlist.
 	private static Node convertarrToLinkedList(int[] arr) {
@@ -170,15 +170,94 @@ class LinkedList_code {
 		return head;
 
 	}
+	
+	// Helper function to get the k-th node from the current node.
+	private static Node getKthNode(Node curr, int k) {
+	    while (curr != null && k > 0) {
+	        curr = curr.next;
+	        k--; 
+	    }
+	    return curr;
+	}
+	
+	// Reverse the linkedList in kth rotation
+	private static Node kthNodeToReverseTheLinkedList(Node head, int k) {
+        
+        Node dummy = new Node(0);
+        dummy.next = head;
+        
+        Node groupPrev = dummy;
+        
+        while (true) {
+            
+            // Find the kth Node group.
+            Node kth = getKthNode(groupPrev, k);
+            if (kth == null) break;
+            
+            Node groupNext = kth.next;
+              
+            Node prev = groupNext;
+            Node curr = groupPrev.next;
+            
+            // Reverse the kth Node group.
+            for (int i = 0; i < k; i++) {
+                Node temp = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = temp;
+            }
+            
+            
+            Node temp = groupPrev.next;
+            groupPrev.next = kth;
+            groupPrev = temp;
+        }
+        
+        return dummy.next;
+    }
+    
+    // Rotate the linkedlist in kth rotation.
+    private static Node rotateTheLinkedListkthNode(Node head, int k) {
+        
+        if (head == null || head.next == null || k == 0) return head;
+        
+        Node tail = head;
+        
+        int len = 1;
+        
+        while (tail.next != null ) {
+            len++;
+            tail = tail.next;
+        }
+        
+        tail.next = head;
+        
+        if (k % len == 0) return head;
+        
+        k = k % len;
+        
+        int steps = len - k - 1;
+        
+        Node kth = head;
+        for (int i = 0; i < steps; i++) {
+            kth = kth.next;
+        }
+        
+        Node newHead = kth.next;
+        
+        kth.next = null;
+        
+        return newHead;
+    }
 
 	// Main function.
 	public static void main(String args[]) {
-		int[] arr = {2,4,6,9,21};
+		int[] arr = {1,2,3,4,5};
 
 		Node y = convertarrToLinkedList(arr);
 
 
-		Node yy = insertvaleInKthValue(y,23, 6);
+		Node yy = rotateTheLinkedListkthNode(y,2);
 		Node temp = yy;
 
 		while (temp != null) {
